@@ -3,4 +3,4 @@
 
 This is the repo For RTOS Chibios Firmware Development
 
-Using STM32F407 Discovery Board and Chibios 20.3
+Using STM32F407 Discovery Board and Chibios 20.3 using RT/Kernel
