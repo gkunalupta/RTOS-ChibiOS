@@ -19,6 +19,20 @@
 #include "rt_test_root.h"
 #include "oslib_test_root.h"
 
+//Serial Config for Terminal
+static const SerialConfig serial_terminal = {
+  115200,
+  0,
+  USART_CR2_STOP1_BITS,
+  0
+};
+//Serial Config for HC05
+static const SerialConfig serial_HC05 = {
+  9600,
+  0,
+  USART_CR2_STOP1_BITS,
+  0
+};
 /*
  * This is a periodic thread that does absolutely nothing except flashing
  * a LED.
@@ -54,19 +68,11 @@ int main(void) {
    * Activates the serial driver 2 using the driver default configuration.
    * PA2(TX) and PA3(RX) are routed to USART2.
    */
-//  static const SerialConfig my_sd_config =
-//  {
-//     9600,    // baud rate <--> speed parameter in SerialConfig Structure
-//     0,                         // Value of CR1 Register <--> CR1 register parameter in SerialConfig Structure
-//     USART_CR2_STOP1_BITS,      // Value of CR2 Register <--> CR2 Register parameter in SerialConfig Structure
-//     0
-//  }
-
-  sdStart(&SD2, NULL);
+  sdStart(&SD2, &serial_terminal);
   palSetPadMode(GPIOA, 2, PAL_MODE_ALTERNATE(7));
   palSetPadMode(GPIOA, 3, PAL_MODE_ALTERNATE(7));
 
-  sdStart(&SD4, NULL);
+  sdStart(&SD4, &serial_HC05);
   palSetPadMode(GPIOA, 0, PAL_MODE_ALTERNATE(8));
   palSetPadMode(GPIOA, 1, PAL_MODE_ALTERNATE(8));
   /*
@@ -77,20 +83,14 @@ int main(void) {
    * Normal main() thread activity, in this demo it does nothing except
    * sleeping in a loop and check the button state.
    */
-  while (true) {
+  while (true)
+  {
     char buffer[20];
-    //const unsigned char &val;
-//int v =45;
-//    if (palReadPad(GPIOA, GPIOA_BUTTON)) {
-//    test_execute((BaseSequentialStream *)&SD2, &rt_test_suite);
-//    test_execute((BaseSequentialStream *)&SD2, &oslib_test_suite);
-//    }
-  sdPut(&SD2,(char)'A');
- uint8_t token = sdGet(&SD2);
- sdWrite(&SD2, (unsigned char*)"Kunal\n", 5);
-   //sdPut(&SD2, (uint8_t)token);
-   sdRead(&SD2, buffer, 5);
 
+   sdPut(&SD2,(char)'A');
+   sdWrite(&SD2, (unsigned char*)"Kunal\n", 5);
+
+   sdWrite(&SD4, (unsigned char*)"Gettobyte\n", 9);
 
      chThdSleepMilliseconds(100);
 
