@@ -16,8 +16,6 @@
 
 #include "ch.h"
 #include "hal.h"
-#include "rt_test_root.h"
-#include "oslib_test_root.h"
 #include "stdio.h"
 #include "string.h"
 
@@ -29,36 +27,6 @@
 #define SetResetReg          0x0B
 
 static i2cflags_t errors = 0;
-
-
-static const I2CConfig i2ccfg = {
-  OPMODE_I2C,
-  400000,
-  FAST_DUTY_CYCLE_2,
-};
-
-
-uint8_t data[2]={0x01,0x1D};
-uint8_t rxData[6];
-uint16_t X_Axis, Y_Axis, Z_Axis;
-uint8_t StatusReg =0x06;
-
-uint8_t setReset[2]={SetResetReg, 0x01};
-uint8_t cr1[2]={CtrlReg1, 0x1D};
-float compassValue, compassHeading;
-
-
-/*
- * Serial Config for Terminal
- *
- */
-static const SerialConfig serial_terminal = {
-  115200,
-  0,
-  USART_CR2_STOP1_BITS,
-  0
-};
-
 
 static void print(char *p) {
 
@@ -102,17 +70,27 @@ static void printn(int16_t n) {
   }
 }
 
+
+static const I2CConfig i2ccfg = {
+  OPMODE_I2C,
+  400000,
+  FAST_DUTY_CYCLE_2,
+};
+
+
+uint8_t data[2]={0x01,0x1D};
+uint8_t rxData[6];
+uint16_t X_Axis, Y_Axis, Z_Axis;
+uint8_t StatusReg =0x06;
+
+uint8_t setReset[2]={SetResetReg, 0x01};
+uint8_t cr1[2]={CtrlReg1, 0x1D};
+float compassValue, compassHeading;
+
+
 /*
  * Application entry point.
  */
-
-
-#define gb_pcf8574_WADDR 0b01111110  //Slave Write
-#define gb_pcf8574_RADDR 0b01111111   //Slave Read
-#define gb_pcf8574_ADDR  0b0111111
-#define gb_LCD_BACKLIGHT         0x08
-#define gb_LCD_NOBACKLIGHT       0x00
-#define gb_display_rate 50
 
 
 int main(void)
@@ -141,25 +119,25 @@ int main(void)
        * Activates the serial driver 2 using the driver default configuration.
        * PA2(TX) and PA3(RX) are routed to USART2.
        */
-      sdStart(&SD2, &serial_terminal);
+      sdStart(&SD2, NULL);
       palSetPadMode(GPIOA, 2, PAL_MODE_ALTERNATE(7));
       palSetPadMode(GPIOA, 3, PAL_MODE_ALTERNATE(7));
 
-      sdWrite(&SD2, (unsigned char*)"Write a String\n", 15);
+     // sdWrite(&SD2, (unsigned char*)"Write a String\n", 15);
 
         /*
          * Starting the transmitter and receiver threads.
          */
-      palSetPadMode(GPIOA, GPIOA_PIN8, PAL_MODE_ALTERNATE(4) | PAL_STM32_OSPEED_HIGHEST);    /* I2C_SCK PA8 */
-      palSetPadMode(GPIOC,GPIOC_PIN9,  PAL_MODE_ALTERNATE(4) | PAL_STM32_OSPEED_HIGHEST);    /* I2C_SDA PC9 */
+      palSetPadMode(GPIOA, GPIOA_PIN8, PAL_MODE_ALTERNATE(4) | PAL_STM32_OSPEED_HIGHEST | PAL_STM32_OTYPE_OPENDRAIN);    /* I2C_SCK PA8 */
+      palSetPadMode(GPIOC,GPIOC_PIN9,  PAL_MODE_ALTERNATE(4) | PAL_STM32_OSPEED_HIGHEST | PAL_STM32_OTYPE_OPENDRAIN);    /* I2C_SDA PC9 */
       /* Prepare the Magnetometer*/
-     // i2cAcquireBus(&I2CD3);
-       status = i2cMasterTransmitTimeout(&I2CD3,DeviceAddress,setReset,2,NULL,0,10); //Write Register 0BH by 0x01 (Define Set/Reset period)
+     i2cAcquireBus(&I2CD3);
+       status = i2cMasterTransmitTimeout(&I2CD3,DeviceAddress,setReset,2,NULL,0,100); //Write Register 0BH by 0x01 (Define Set/Reset period)
       //status = i2cMasterTransmit(&I2CD3,DeviceAddress,setReset,2,rxData,0);
      // status = i2cMasterTransmitTimeout(&I2CD3,DeviceAddress,cr1,2,NULL,0,10);     // Write Register 09H by 0x1D (Define OSR = 512, Full Scale Range = 8 Gauss, ODR = 200Hz, set continuous measurement mode
-    //  i2cReleaseBus(&I2CD3);
+   i2cReleaseBus(&I2CD3);
       //status = i2cMasterTransmit(&I2CD3,DeviceAddress,cr1,2,rxData,0);
-      print("status1 & 2:");
+      print("status :");
       printn(status);
       println("");
       if (status != MSG_OK)
@@ -176,14 +154,19 @@ int main(void)
    * Normal main() thread activity, in this demo it does nothing except
    * sleeping in a loop and check the button state.
    */
-          while (true) {
-            //    i2cAcquireBus(&I2CD3);
-                status = i2cMasterTransmitTimeout(&I2CD3, DeviceAddress, &StatusReg,1,rxData,1,10); // Check status register 06H[0]
-               // i2cReleaseBus(&I2CD3);
+          while (true)
+          {
+            i2cStart(&I2CD3, &i2ccfg);
+             //i2cAcquireBus(&I2CD3);
+                status = i2cMasterTransmit(&I2CD3,DeviceAddress, &StatusReg,1,NULL,0); // Check status register 06H[0]
+             //  i2cReleaseBus(&I2CD3);
+                print("status :");
+                     printn(status);
+                     println("");
                 if (status != MSG_OK)
                 {
                    errors = i2cGetErrors(&I2CD3);
-                   print("Errors1: ");
+                   print("Error : ");
                    printn(errors);
                    println("");
                 }
@@ -193,42 +176,14 @@ int main(void)
                   println("");
 
                 }
-
-
-                if((rxData[0]&0x01) == 1){  // checking Drdy bit if '1' means ready to read.
-                      palTogglePad(GPIOD, GPIOD_LED4);
-                      chThdSleepMilliseconds(500);
-                    //  i2cAcquireBus(&I2CD3);
-                      status = i2cMasterTransmitTimeout(&I2CD3, DeviceAddress, 0x00,1,rxData,6,10); //Reading Mag X,Y,Z registers .
-                      //status = i2cMasterTransmit(&I2CD3, DeviceAddress, 0x00,1,rxData,6);
-                    //  i2cReleaseBus(&I2CD3);
-                      if (status != MSG_OK){
-                            errors = i2cGetErrors(&I2CD3);
-                            print("Errors2: ");
-                            printn(errors);
-                            println("");
-                       }
-                      X_Axis=rxData[1]<<8 |rxData[0];
-                      Y_Axis=rxData[3]<<8 |rxData[2];
-                      Z_Axis=rxData[5]<<8 |rxData[4];
-                      print("X: ");
-                      printn(X_Axis);
-                      println("");
-                      print(" Y: ");
-                      printn(Y_Axis);
-                      println("");
-                      print(" Z: ");
-                      printn(Z_Axis);
-                      println("");
-                      chThdSleepMilliseconds(1000);
-                 }
+                i2cStop(&I2CD3);
 
   // char buffer[20];
 
  //  sdWrite(&SD2, (unsigned char*)"Write a String\n", 15);
  //sdRead(&SD2, buffer, 6);
 
-    //chThdSleepMilliseconds(100);
+    chThdSleepMilliseconds(1000);
 
     }
    // chThdSleepMilliseconds(500);

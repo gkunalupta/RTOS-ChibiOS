@@ -112,29 +112,6 @@ build/obj/main.o: main.c ../../chibios203/os/rt/include/ch.h cfg/chconf.h \
  ../../chibios203/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h \
  ../../chibios203/os/hal/include/hal_mmc_spi.h \
  ../../chibios203/os/hal/include/hal_serial_usb.h \
- ../../chibios203/test/rt/source/test/rt_test_root.h \
- ../../chibios203/test/lib/ch_test.h \
- ../../chibios203/test/rt/source/test/rt_test_sequence_001.h \
- ../../chibios203/test/rt/source/test/rt_test_sequence_002.h \
- ../../chibios203/test/rt/source/test/rt_test_sequence_003.h \
- ../../chibios203/test/rt/source/test/rt_test_sequence_004.h \
- ../../chibios203/test/rt/source/test/rt_test_sequence_005.h \
- ../../chibios203/test/rt/source/test/rt_test_sequence_006.h \
- ../../chibios203/test/rt/source/test/rt_test_sequence_007.h \
- ../../chibios203/test/rt/source/test/rt_test_sequence_008.h \
- ../../chibios203/test/rt/source/test/rt_test_sequence_009.h \
- ../../chibios203/test/rt/source/test/rt_test_sequence_010.h \
- ../../chibios203/test/rt/source/test/rt_test_sequence_011.h \
- ../../chibios203/test/oslib/source/test/oslib_test_root.h \
- ../../chibios203/test/oslib/source/test/oslib_test_sequence_001.h \
- ../../chibios203/test/oslib/source/test/oslib_test_sequence_002.h \
- ../../chibios203/test/oslib/source/test/oslib_test_sequence_003.h \
- ../../chibios203/test/oslib/source/test/oslib_test_sequence_004.h \
- ../../chibios203/test/oslib/source/test/oslib_test_sequence_005.h \
- ../../chibios203/test/oslib/source/test/oslib_test_sequence_006.h \
- ../../chibios203/test/oslib/source/test/oslib_test_sequence_007.h \
- ../../chibios203/test/oslib/source/test/oslib_test_sequence_008.h \
- ../../chibios203/test/oslib/source/test/oslib_test_sequence_009.h \
  c:\chibistudio\tools\gnu\ tools\ arm\ embedded\9.0\ 2019q4\arm-none-eabi\include\stdio.h \
  c:\chibistudio\tools\gnu\ tools\ arm\ embedded\9.0\ 2019q4\arm-none-eabi\include\_ansi.h \
  c:\chibistudio\tools\gnu\ tools\ arm\ embedded\9.0\ 2019q4\arm-none-eabi\include\newlib.h \
@@ -396,52 +373,6 @@ cfg/mcuconf.h:
 ../../chibios203/os/hal/include/hal_mmc_spi.h:
 
 ../../chibios203/os/hal/include/hal_serial_usb.h:
-
-../../chibios203/test/rt/source/test/rt_test_root.h:
-
-../../chibios203/test/lib/ch_test.h:
-
-../../chibios203/test/rt/source/test/rt_test_sequence_001.h:
-
-../../chibios203/test/rt/source/test/rt_test_sequence_002.h:
-
-../../chibios203/test/rt/source/test/rt_test_sequence_003.h:
-
-../../chibios203/test/rt/source/test/rt_test_sequence_004.h:
-
-../../chibios203/test/rt/source/test/rt_test_sequence_005.h:
-
-../../chibios203/test/rt/source/test/rt_test_sequence_006.h:
-
-../../chibios203/test/rt/source/test/rt_test_sequence_007.h:
-
-../../chibios203/test/rt/source/test/rt_test_sequence_008.h:
-
-../../chibios203/test/rt/source/test/rt_test_sequence_009.h:
-
-../../chibios203/test/rt/source/test/rt_test_sequence_010.h:
-
-../../chibios203/test/rt/source/test/rt_test_sequence_011.h:
-
-../../chibios203/test/oslib/source/test/oslib_test_root.h:
-
-../../chibios203/test/oslib/source/test/oslib_test_sequence_001.h:
-
-../../chibios203/test/oslib/source/test/oslib_test_sequence_002.h:
-
-../../chibios203/test/oslib/source/test/oslib_test_sequence_003.h:
-
-../../chibios203/test/oslib/source/test/oslib_test_sequence_004.h:
-
-../../chibios203/test/oslib/source/test/oslib_test_sequence_005.h:
-
-../../chibios203/test/oslib/source/test/oslib_test_sequence_006.h:
-
-../../chibios203/test/oslib/source/test/oslib_test_sequence_007.h:
-
-../../chibios203/test/oslib/source/test/oslib_test_sequence_008.h:
-
-../../chibios203/test/oslib/source/test/oslib_test_sequence_009.h:
 
 c:\chibistudio\tools\gnu\ tools\ arm\ embedded\9.0\ 2019q4\arm-none-eabi\include\stdio.h:
 

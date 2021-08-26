@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 1
+ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccirqhIv.s 			page 1
 
 
    1              	# 1 "../../chibios203/os/common/ports/ARMCMx/compilers/GCC/chcoreasm_v7m.S"
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 1
   14              	    GNU General Public License for more details.
   15              	
   16              	    You should have received a copy of the GNU General Public License
-ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 2
+ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccirqhIv.s 			page 2
 
 
   17              	    along with this program.  If not, see <http://www.gnu.org/licenses/>.
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 1
    1              	/*
   39              	#include "chcore.h"
    1              	/*
-ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 3
+ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccirqhIv.s 			page 3
 
 
    2              	    ChibiOS - Copyright (C) 2006..2018 Giovanni Di Sirio.
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 1
   56              	#define PORT_COMPILER_NAME              "IAR"
   57              	
   58              	#elif defined(__CC_ARM)
-ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 4
+ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccirqhIv.s 			page 4
 
 
   59              	#define PORT_COMPILER_NAME              "RVCT"
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 1
   43              	 */
   44              	#define CORTEX_PRIORITY_BITS    4
   45              	
-ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 5
+ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccirqhIv.s 			page 5
 
 
   46              	/* If the device type is not externally defined, for example from the Makefile,
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 1
  106              	/* The following declarations are there just for Doxygen documentation, the
  107              	   real declarations are inside the sub-headers being specific for the
  108              	   sub-architectures.*/
-ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 6
+ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccirqhIv.s 			page 6
 
 
  109              	#if defined(__DOXYGEN__)
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 1
  163              	
  164              	/**
  165              	 * @brief   Priority level verification macro.
-ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 7
+ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccirqhIv.s 			page 7
 
 
  166              	 */
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 1
   67              	#endif
   68              	
   69              	                .thumb
-ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 8
+ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccirqhIv.s 			page 8
 
 
   70              	                .text
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 1
  124              	                /* Workaround for ARM errata 752419, only applied if
  125              	                   condition exists for it to be triggered.*/
  126 0008 C368     	                ldr     r3, [r0, #CONTEXT_OFFSET]
-ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 9
+ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccirqhIv.s 			page 9
 
 
  127 000a 9D46     	                mov     sp, r3
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 1
  181              	 *--------------------------------------------------------------------------*/
  182              	                .thumb_func
  183              	                .globl  _port_thread_start
-ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 10
+ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccirqhIv.s 			page 10
 
 
  184              	_port_thread_start:
@@ -546,22 +546,22 @@ ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 1
  186              	                bl      _port_set_region
  187              	#endif
  188              	#if CH_DBG_SYSTEM_STATE_CHECK
- 189              	                bl      _dbg_check_unlock
+ 189 0010 FFF7FEFF 	                bl      _dbg_check_unlock
  190              	#endif
  191              	#if CH_DBG_STATISTICS
- 192 0010 FFF7FEFF 	                bl      _stats_stop_measure_crit_thd
+ 192 0014 FFF7FEFF 	                bl      _stats_stop_measure_crit_thd
  193              	#endif
  194              	#if CORTEX_SIMPLIFIED_PRIORITY
  195              	                cpsie   i
  196              	#else
- 197 0014 0023     	                movs    r3, #0              /* CORTEX_BASEPRI_DISABLED */
- 198 0016 83F31188 	                msr     BASEPRI, r3
+ 197 0018 0023     	                movs    r3, #0              /* CORTEX_BASEPRI_DISABLED */
+ 198 001a 83F31188 	                msr     BASEPRI, r3
  199              	#endif
- 200 001a 2846     	                mov     r0, r5
- 201 001c A047     	                blx     r4
- 202 001e 0020     	                movs    r0, #0              /* MSG_OK */
- 203 0020 FFF7FEFF 	                bl      chThdExit
- 204 0024 FEE7     	_zombies:       b       _zombies
+ 200 001e 2846     	                mov     r0, r5
+ 201 0020 A047     	                blx     r4
+ 202 0022 0020     	                movs    r0, #0              /* MSG_OK */
+ 203 0024 FFF7FEFF 	                bl      chThdExit
+ 204 0028 FEE7     	_zombies:       b       _zombies
  205              	
  206              	/*--------------------------------------------------------------------------*
  207              	 * Post-IRQ switch code.
@@ -572,17 +572,17 @@ ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 1
  212              	                .globl  _port_switch_from_isr
  213              	_port_switch_from_isr:
  214              	#if CH_DBG_STATISTICS
- 215 0026 FFF7FEFF 	                bl      _stats_start_measure_crit_thd
+ 215 002a FFF7FEFF 	                bl      _stats_start_measure_crit_thd
  216              	#endif
  217              	#if CH_DBG_SYSTEM_STATE_CHECK
- 218              	                bl      _dbg_check_lock
+ 218 002e FFF7FEFF 	                bl      _dbg_check_lock
  219              	#endif
- 220 002a FFF7FEFF 	                bl      chSchDoReschedule
+ 220 0032 FFF7FEFF 	                bl      chSchDoReschedule
  221              	#if CH_DBG_SYSTEM_STATE_CHECK
- 222              	                bl      _dbg_check_unlock
+ 222 0036 FFF7FEFF 	                bl      _dbg_check_unlock
  223              	#endif
  224              	#if CH_DBG_STATISTICS
- 225 002e FFF7FEFF 	                bl      _stats_stop_measure_crit_thd
+ 225 003a FFF7FEFF 	                bl      _stats_stop_measure_crit_thd
  226              	#endif
  227              	                .globl  _port_exit_from_isr
  228              	_port_exit_from_isr:
@@ -593,22 +593,24 @@ ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 1
  233              	                str     r2, [r3, #0]
  234              	                cpsie   i
  235              	#else /* !CORTEX_SIMPLIFIED_PRIORITY */
- 236 0032 00DF     	                svc     #0
+ 236 003e 00DF     	                svc     #0
  237              	#endif /* !CORTEX_SIMPLIFIED_PRIORITY */
- 238 0034 FEE7     	.L1:            b       .L1
-ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccCVImem.s 			page 11
+ 238 0040 FEE7     	.L1:            b       .L1
+ARM GAS  C:\Users\kunal\AppData\Local\Temp\ccirqhIv.s 			page 11
 
 
 DEFINED SYMBOLS
 ../../chibios203/os/common/ports/ARMCMx/compilers/GCC/chcoreasm_v7m.S:77     .text:00000000 _port_switch
 ../../chibios203/os/common/ports/ARMCMx/compilers/GCC/chcoreasm_v7m.S:78     .text:00000000 $t
 ../../chibios203/os/common/ports/ARMCMx/compilers/GCC/chcoreasm_v7m.S:184    .text:00000010 _port_thread_start
-../../chibios203/os/common/ports/ARMCMx/compilers/GCC/chcoreasm_v7m.S:204    .text:00000024 _zombies
-../../chibios203/os/common/ports/ARMCMx/compilers/GCC/chcoreasm_v7m.S:213    .text:00000026 _port_switch_from_isr
-../../chibios203/os/common/ports/ARMCMx/compilers/GCC/chcoreasm_v7m.S:228    .text:00000032 _port_exit_from_isr
+../../chibios203/os/common/ports/ARMCMx/compilers/GCC/chcoreasm_v7m.S:204    .text:00000028 _zombies
+../../chibios203/os/common/ports/ARMCMx/compilers/GCC/chcoreasm_v7m.S:213    .text:0000002a _port_switch_from_isr
+../../chibios203/os/common/ports/ARMCMx/compilers/GCC/chcoreasm_v7m.S:228    .text:0000003e _port_exit_from_isr
 
 UNDEFINED SYMBOLS
+_dbg_check_unlock
 _stats_stop_measure_crit_thd
 chThdExit
 _stats_start_measure_crit_thd
+_dbg_check_lock
 chSchDoReschedule
